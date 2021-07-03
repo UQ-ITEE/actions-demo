@@ -22,7 +22,9 @@ jobs:
         node-version: '14' # Change this to whatever version you want 
 
     - name: Install packages # Anything in the package lock
-      run: npm ci
+      run: |
+        cd web-demo
+        npm ci
     
     - name: Build app
       run: npm run build
