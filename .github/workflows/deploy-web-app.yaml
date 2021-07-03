@@ -15,7 +15,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: built-app
-        path: ./build
+        path: ./web-demo/build
 
     - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v3
