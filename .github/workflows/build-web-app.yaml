@@ -11,6 +11,9 @@ jobs:
   build_app:
     name: Build Web App
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web-demo
 
     steps:
     - name: Checkout repo
@@ -22,22 +25,18 @@ jobs:
         node-version: '14' # Change this to whatever version you want 
 
     - name: Install packages # Anything in the package lock
-      working-directory: web-demo
       run: npm ci
     
     - name: Build app 
-      working-directory: web-demo
       run: yarn build
 
     - name: Test app # Should kill the workflow if it fails
-      working-directory: web-demo
       run: yarn test --passWithNoTests
     
     - name: Upload build to GitHub
       uses: actions/upload-artifact@v2
-      working-directory: web-demo
       with:
         name: built-app
-        path: ./build
+        path: ./web-demo/build # Have to specify from root here
 
 
