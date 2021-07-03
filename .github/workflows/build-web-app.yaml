@@ -1,0 +1,39 @@
+name: Build Web App
+
+on: # Push to main, all PR's
+  push:
+    branches:
+      - main
+  pull_request:
+
+
+jobs:
+  build_app:
+    name: Build Web App
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    - name: Install Node 
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14' # Change this to whatever version you want 
+
+    - name: Install packages # Anything in the package lock
+      run: npm ci
+    
+    - name: Build app
+      run: npm run build
+
+    - name: Test app # Should kill the workflow if it fails
+      run: npm run test
+    
+    - name: Upload build to GitHub
+      uses: actions/upload-artifact@v2
+      with:
+        name: built-app
+        path: ./build
+
+
