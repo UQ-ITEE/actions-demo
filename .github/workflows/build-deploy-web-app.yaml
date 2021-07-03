@@ -1,4 +1,4 @@
-name: Build Web App
+name: Build and Deploy Web App
 
 on: # Push to main, all PR's
   push:
@@ -38,5 +38,23 @@ jobs:
       with:
         name: built-app
         path: ./web-demo/build # Have to specify from root here
+
+  deploy_app:
+    name: Deploy app
+    needs: build_app
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: built-app
+        path: ./web-demo/build
+
+    - name: Deploy to gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build
 
 
