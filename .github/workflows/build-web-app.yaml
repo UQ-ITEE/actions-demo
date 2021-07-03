@@ -26,11 +26,15 @@ jobs:
         cd web-demo
         npm ci
     
-    - name: Build app
-      run: yarn build
+    - name: Build app # We need to cd every time due to project not being in root
+      run: |
+        cd web-demo 
+        yarn build
 
     - name: Test app # Should kill the workflow if it fails
-      run: yarn test
+      run: |
+        cd web-demo
+        yarn test
     
     - name: Upload build to GitHub
       uses: actions/upload-artifact@v2
