@@ -34,7 +34,7 @@ jobs:
     - name: Test app # Should kill the workflow if it fails
       run: |
         cd web-demo
-        yarn test
+        yarn test --passWithNoTests
     
     - name: Upload build to GitHub
       uses: actions/upload-artifact@v2
