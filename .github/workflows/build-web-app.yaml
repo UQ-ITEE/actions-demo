@@ -22,22 +22,20 @@ jobs:
         node-version: '14' # Change this to whatever version you want 
 
     - name: Install packages # Anything in the package lock
-      run: |
-        cd web-demo
-        npm ci
+      working-directory: web-demo
+      run: npm ci
     
-    - name: Build app # We need to cd every time due to project not being in root
-      run: |
-        cd web-demo 
-        yarn build
+    - name: Build app 
+      working-directory: web-demo
+      run: yarn build
 
     - name: Test app # Should kill the workflow if it fails
-      run: |
-        cd web-demo
-        yarn test --passWithNoTests
+      working-directory: web-demo
+      run: yarn test --passWithNoTests
     
     - name: Upload build to GitHub
       uses: actions/upload-artifact@v2
+      working-directory: web-demo
       with:
         name: built-app
         path: ./build
